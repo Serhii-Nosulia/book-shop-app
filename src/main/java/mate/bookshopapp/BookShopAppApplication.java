@@ -3,7 +3,6 @@ package mate.bookshopapp;
 import java.math.BigDecimal;
 import mate.bookshopapp.model.Book;
 import mate.bookshopapp.service.BookService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,7 +12,6 @@ import org.springframework.context.annotation.Bean;
 public class BookShopAppApplication {
     private final BookService bookService;
 
-    @Autowired
     public BookShopAppApplication(BookService bookService) {
         this.bookService = bookService;
     }
