@@ -8,8 +8,8 @@ import jakarta.persistence.Id;
 import java.math.BigDecimal;
 import lombok.Data;
 
-@Entity(name = "books")
 @Data
+@Entity(name = "books")
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
