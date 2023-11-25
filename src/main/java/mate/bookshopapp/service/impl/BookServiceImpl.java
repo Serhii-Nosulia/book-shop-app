@@ -2,13 +2,15 @@ package mate.bookshopapp.service.impl;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import mate.bookshopapp.dto.BookDto;
-import mate.bookshopapp.dto.CreateBookRequestDto;
-import mate.bookshopapp.dto.UpdateBookDto;
+import mate.bookshopapp.dto.book.BookDto;
+import mate.bookshopapp.dto.book.BookSearchParametersDto;
+import mate.bookshopapp.dto.book.CreateBookRequestDto;
+import mate.bookshopapp.dto.book.UpdateBookDto;
 import mate.bookshopapp.exception.EntityNotFoundException;
 import mate.bookshopapp.mapper.BookMapper;
 import mate.bookshopapp.model.Book;
-import mate.bookshopapp.repository.BookRepository;
+import mate.bookshopapp.repository.SpecificationBuilder;
+import mate.bookshopapp.repository.book.BookRepository;
 import mate.bookshopapp.service.BookService;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Service;
 public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
     private final BookMapper bookMapper;
+    private final SpecificationBuilder<Book> bookSpecificationBuilder;
 
     public BookDto save(CreateBookRequestDto requestDto) {
         Book book = bookMapper.toModel(requestDto);
@@ -39,15 +42,23 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public List<BookDto> searchBooks(BookSearchParametersDto bookSearchParametersDto) {
+        return bookRepository.findAll(bookSpecificationBuilder.build(bookSearchParametersDto))
+                .stream()
+                .map(bookMapper::toDto)
+                .toList();
+    }
+
+    @Override
     public void updateById(Long id, UpdateBookDto bookDto) {
         Book bookById = bookRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Couldn't find book by id: " + id));
-        bookById.setTitle(bookDto.getTitle());
-        bookById.setAuthor(bookDto.getAuthor());
-        bookById.setIsbn(bookDto.getIsbn());
-        bookById.setPrice(bookDto.getPrice());
-        bookById.setDescription(bookDto.getDescription());
-        bookById.setCoverImage(bookDto.getCoverImage());
+        bookById.setTitle(bookDto.title());
+        bookById.setAuthor(bookDto.author());
+        bookById.setIsbn(bookDto.isbn());
+        bookById.setPrice(bookDto.price());
+        bookById.setDescription(bookDto.description());
+        bookById.setCoverImage(bookDto.coverImage());
         bookRepository.save(bookById);
     }
 

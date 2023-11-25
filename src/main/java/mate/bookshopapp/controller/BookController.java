@@ -2,9 +2,10 @@ package mate.bookshopapp.controller;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import mate.bookshopapp.dto.BookDto;
-import mate.bookshopapp.dto.CreateBookRequestDto;
-import mate.bookshopapp.dto.UpdateBookDto;
+import mate.bookshopapp.dto.book.BookDto;
+import mate.bookshopapp.dto.book.BookSearchParametersDto;
+import mate.bookshopapp.dto.book.CreateBookRequestDto;
+import mate.bookshopapp.dto.book.UpdateBookDto;
 import mate.bookshopapp.service.BookService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,6 +32,12 @@ public class BookController {
     @GetMapping("/{id}")
     public BookDto getBookById(@PathVariable Long id) {
         return bookService.findById(id);
+    }
+
+    @GetMapping("/search")
+    public List<BookDto> searchBooks(BookSearchParametersDto bookSearchParametersDto) {
+
+        return bookService.searchBooks(bookSearchParametersDto);
     }
 
     @PostMapping
