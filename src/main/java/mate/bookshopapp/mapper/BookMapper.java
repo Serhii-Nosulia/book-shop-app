@@ -1,8 +1,8 @@
 package mate.bookshopapp.mapper;
 
 import mate.bookshopapp.config.MapperConfig;
-import mate.bookshopapp.dto.BookDto;
-import mate.bookshopapp.dto.CreateBookRequestDto;
+import mate.bookshopapp.dto.book.BookDto;
+import mate.bookshopapp.dto.book.CreateBookRequestDto;
 import mate.bookshopapp.model.Book;
 import org.mapstruct.Mapper;
 
