@@ -5,13 +5,14 @@ import mate.bookshopapp.dto.book.BookDto;
 import mate.bookshopapp.dto.book.BookSearchParametersDto;
 import mate.bookshopapp.dto.book.CreateBookRequestDto;
 import mate.bookshopapp.dto.book.UpdateBookDto;
+import org.springframework.data.domain.Pageable;
 
 public interface BookService {
     BookDto save(CreateBookRequestDto createBookRequestDto);
 
     BookDto findById(Long id);
 
-    List<BookDto> findAll();
+    List<BookDto> findAll(Pageable pageable);
 
     List<BookDto> searchBooks(BookSearchParametersDto bookSearchParametersDto);
 
