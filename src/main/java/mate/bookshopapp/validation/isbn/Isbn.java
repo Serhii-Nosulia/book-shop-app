@@ -1,4 +1,4 @@
-package mate.bookshopapp.validation;
+package mate.bookshopapp.validation.isbn;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
