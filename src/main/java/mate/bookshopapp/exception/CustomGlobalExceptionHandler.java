@@ -41,14 +41,14 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
     }
 
     @ExceptionHandler({Exception.class})
-    public ResponseEntity<Object> handleCustomErrors(Exception exception, WebRequest request) {
+    public ResponseEntity<Object> handleAll(Exception exception, WebRequest request) {
         Map<String, Object> body = new LinkedHashMap<>();
         body.put(TIMESTAMP, LocalDateTime.now());
-        body.put(STATUS, HttpStatus.BAD_REQUEST);
+        body.put(STATUS, HttpStatus.INTERNAL_SERVER_ERROR);
         List<String> errors = Collections.singletonList(exception.getLocalizedMessage());
         body.put(ERRORS, errors);
 
-        return new ResponseEntity<>(body, new HttpHeaders(), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(body, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     private String getErrorMassage(ObjectError objectError) {

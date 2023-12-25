@@ -16,13 +16,13 @@ public class FieldMatchValidation implements ConstraintValidator<FieldMatch, Obj
 
     @Override
     public boolean isValid(Object value, ConstraintValidatorContext constraintValidatorContext) {
-        Object firstFieldValue = new BeanWrapperImpl(value).getPropertyValue(field);
-        Object secondFieldValue = new BeanWrapperImpl(value).getPropertyValue(fieldMatch);
+        Object checkingField = new BeanWrapperImpl(value).getPropertyValue(this.field);
+        Object controlField = new BeanWrapperImpl(value).getPropertyValue(this.fieldMatch);
 
-        if (firstFieldValue != null) {
-            return firstFieldValue.equals(secondFieldValue);
+        if (checkingField != null) {
+            return checkingField.equals(controlField);
         } else {
-            return secondFieldValue == null;
+            return controlField == null;
         }
     }
 }
