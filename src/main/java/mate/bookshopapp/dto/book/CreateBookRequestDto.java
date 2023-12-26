@@ -5,7 +5,7 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
-import mate.bookshopapp.validation.Isbn;
+import mate.bookshopapp.validation.isbn.Isbn;
 
 public record CreateBookRequestDto(@NotBlank String title,
                                    @NotBlank String author,

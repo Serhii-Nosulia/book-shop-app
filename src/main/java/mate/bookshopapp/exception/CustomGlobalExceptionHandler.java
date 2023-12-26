@@ -1,6 +1,7 @@
 package mate.bookshopapp.exception;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +13,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
@@ -36,6 +38,17 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
                 .toList();
         body.put(ERRORS, errors);
         return new ResponseEntity<>(body, headers, status);
+    }
+
+    @ExceptionHandler({Exception.class})
+    public ResponseEntity<Object> handleAll(Exception exception, WebRequest request) {
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put(TIMESTAMP, LocalDateTime.now());
+        body.put(STATUS, HttpStatus.INTERNAL_SERVER_ERROR);
+        List<String> errors = Collections.singletonList(exception.getLocalizedMessage());
+        body.put(ERRORS, errors);
+
+        return new ResponseEntity<>(body, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     private String getErrorMassage(ObjectError objectError) {
