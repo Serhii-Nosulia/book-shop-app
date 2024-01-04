@@ -1,0 +1,15 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-users-roles
+      author: serhiinosylia
+      changes:
+        - insert:
+            tableName: users_roles
+            columns:
+              - column: {name: "user_id", valueComputed: "1"}
+              - column: {name: "role_id", valueComputed: "1"}
+        - insert:
+            tableName: users_roles
+            columns:
+              - column: { name: "user_id", valueComputed: "2" }
+              - column: { name: "role_id", valueComputed: "2" }

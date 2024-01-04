@@ -9,6 +9,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -40,15 +41,18 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
         return new ResponseEntity<>(body, headers, status);
     }
 
-    @ExceptionHandler({Exception.class})
-    public ResponseEntity<Object> handleAll(Exception exception, WebRequest request) {
+    @ExceptionHandler({
+            EntityNotFoundException.class,
+            SpecificationProviderNotFoundException.class,
+            UsernameNotFoundException.class})
+    public ResponseEntity<Object> handleNoFoundExceptions(Exception exception) {
         Map<String, Object> body = new LinkedHashMap<>();
         body.put(TIMESTAMP, LocalDateTime.now());
-        body.put(STATUS, HttpStatus.INTERNAL_SERVER_ERROR);
+        body.put(STATUS, HttpStatus.NOT_FOUND);
         List<String> errors = Collections.singletonList(exception.getLocalizedMessage());
         body.put(ERRORS, errors);
 
-        return new ResponseEntity<>(body, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(body, new HttpHeaders(), HttpStatus.NOT_FOUND);
     }
 
     private String getErrorMassage(ObjectError objectError) {
