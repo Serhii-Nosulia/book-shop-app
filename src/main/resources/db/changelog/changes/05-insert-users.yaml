@@ -1,0 +1,19 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-users
+      author: serhiinosylia
+      changes:
+        - insert:
+            tableName: users
+            columns:
+              - column: {name: "email", value: "admin@i.com"}
+              - column: {name: "password", value: "$2a$12$cWSmjucIeX5N5ji3GhFpF.OTfGR5D2dVaueEgfETTY4byj9d7.nu6"}
+              - column: {name: "first_name", value: "Admin"}
+              - column: {name: "last_name", value: "Adminchuk"}
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: "email", value: "user@i.com" }
+              - column: { name: "password", value: "$2a$12$noXjDC9iBFOez0t6q5QycuKaqnfzPSI5Daz8xI6GFUAjbpb7dkdgK" }
+              - column: { name: "first_name", value: "User" }
+              - column: { name: "last_name", value: "Userchuk" }
