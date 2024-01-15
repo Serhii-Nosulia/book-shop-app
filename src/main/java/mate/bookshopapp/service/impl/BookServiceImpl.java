@@ -3,6 +3,7 @@ package mate.bookshopapp.service.impl;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import mate.bookshopapp.dto.book.BookDto;
+import mate.bookshopapp.dto.book.BookDtoWithoutCategoryIds;
 import mate.bookshopapp.dto.book.BookSearchParametersDto;
 import mate.bookshopapp.dto.book.CreateBookRequestDto;
 import mate.bookshopapp.dto.book.UpdateBookDto;
@@ -29,7 +30,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookDto findById(Long id) {
-        Book book = bookRepository.findById(id).orElseThrow(
+        Book book = bookRepository.findBookById(id).orElseThrow(
                 () -> new EntityNotFoundException("Couldn't find book by id: " + id)
         );
         return bookMapper.toDto(book);
@@ -37,8 +38,15 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<BookDto> findAll(Pageable pageable) {
-        return bookRepository.findAll(pageable).stream()
+        return bookRepository.findAllBooks(pageable).stream()
                 .map(bookMapper::toDto)
+                .toList();
+    }
+
+    @Override
+    public List<BookDtoWithoutCategoryIds> findBooksByCategoryId(Long id) {
+        return bookRepository.findBooksByCategoryId(id).stream()
+                .map(bookMapper::toBookDtoWithoutCategoryIds)
                 .toList();
     }
 
