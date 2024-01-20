@@ -44,15 +44,17 @@ public class ShoppingCartController {
 
     @PutMapping("/cart-items/{cartItemId}")
     @PreAuthorize("hasRole('ROLE_USER')")
-    SetQuantityDto updateBookQuantity(@PathVariable Long cartItemId,
+    SetQuantityDto updateBookQuantity(Authentication authentication, @PathVariable Long cartItemId,
                                       @RequestBody @Valid SetQuantityDto setQuantityDto) {
-        return shoppingCartService.updateBookQuantity(cartItemId, setQuantityDto);
+        User user = (User) authentication.getPrincipal();
+        return shoppingCartService.updateBookQuantity(user.getId(), cartItemId, setQuantityDto);
     }
 
     @DeleteMapping("/cart-items/{cartItemId}")
     @PreAuthorize("hasRole('ROLE_USER')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable Long cartItemId) {
-        shoppingCartService.deleteCartItem(cartItemId);
+    public void delete(Authentication authentication, @PathVariable Long cartItemId) {
+        User user = (User) authentication.getPrincipal();
+        shoppingCartService.deleteCartItem(user.getId(), cartItemId);
     }
 }
