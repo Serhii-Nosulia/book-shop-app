@@ -1,24 +1,26 @@
 databaseChangeLog:
   - changeSet:
-      id: create-categories-books-table
+      id: create-books_categories-table
       author: serhiinosulia
       changes:
         - createTable:
-            tableName: categories_books
+            tableName: books_categories
             columns:
-              - column:
-                  name: category_id
-                  type: bigint
-                  constraints:
-                    foreignKeyName: fk_categories_books_categories
-                    referencedTableName: categories
-                    referencedColumnNames: id
-                    nullable: false
               - column:
                   name: book_id
                   type: bigint
                   constraints:
-                    foreignKeyName: fk_categories_books_books
-                    referencedTableName: books
-                    referencedColumnNames: id
                     nullable: false
+                    foreignKeyName: fk_books_categories_books
+                    references: books(id)
+                    primaryKey: true
+                    deleteCascade: false
+              - column:
+                  name: category_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_books_categories_categories
+                    references: categories(id)
+                    primaryKey: true
+                    deleteCascade: false

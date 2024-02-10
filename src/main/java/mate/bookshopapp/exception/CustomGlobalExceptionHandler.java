@@ -44,7 +44,8 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
     @ExceptionHandler({
             EntityNotFoundException.class,
             SpecificationProviderNotFoundException.class,
-            UsernameNotFoundException.class})
+            UsernameNotFoundException.class,
+            DataNotFoundException.class})
     public ResponseEntity<Object> handleNoFoundExceptions(Exception exception) {
         Map<String, Object> body = new LinkedHashMap<>();
         body.put(TIMESTAMP, LocalDateTime.now());
